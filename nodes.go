@@ -41,6 +41,10 @@ const (
 	// values from this tag are used in conjunction with HCLTag values.
 	HCLETagName = "hcle"
 
+	// HCLETagName is the struct field tag used by this package. The
+	// values from this tag are used in conjunction with HCLTag values.
+	Variable = "var"
+
 	// OmitTag will omit this field from encoding. This is the similar
 	// behavior to `json:"-"`.
 	OmitTag string = "omit"
@@ -57,6 +61,7 @@ type fieldMeta struct {
 	squash        bool
 	unusedKeys    bool
 	decodedFields bool
+	variable      bool
 	omit          bool
 	omitEmpty     bool
 }
@@ -255,6 +260,12 @@ func encodeStruct(in reflect.Value) (ast.Node, []*ast.ObjectKey, error) {
 		if val == nil {
 			continue
 		}
+		if meta.variable {
+			litType, ok := val.(*ast.LiteralType)
+			if ok {
+				litType.Token.Text = strings.ReplaceAll(litType.Token.Text, `"`, "")
+			}
+		}
 
 		// this field is a key and should be bubbled up to the parent node
 		if meta.key {
@@ -375,6 +386,8 @@ func extractFieldMeta(f reflect.StructField) (meta fieldMeta) {
 				meta.decodedFields = true
 			case UnusedKeysTag:
 				meta.unusedKeys = true
+			case Variable:
+				meta.variable = true
 			}
 		}
 	}
