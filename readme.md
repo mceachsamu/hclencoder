@@ -1,3 +1,5 @@
+# Adding ability to use a variable tag. this prevents struct values from being quoted
+
 # hclencoder<br>[![Build Status](https://travis-ci.org/rodaine/hclencoder.svg?branch=master)](https://travis-ci.org/rodaine/hclencoder) [![GoDoc](https://godoc.org/github.com/rodaine/hclencoder?status.svg)](https://godoc.org/github.com/rodaine/hclencoder)
 
 `hclencoder` encodes/marshals/converts Go types into [HCL (Hashicorp Configuration Language)][HCL]. `hclencoder` ensures correctness in the generated HCL, and can be useful for creating programmatic, type-safe config files.
