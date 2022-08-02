@@ -41,9 +41,9 @@ const (
 	// values from this tag are used in conjunction with HCLTag values.
 	HCLETagName = "hcle"
 
-	// HCLETagName is the struct field tag used by this package. The
-	// values from this tag are used in conjunction with HCLTag values.
-	Variable = "var"
+	// Variable prevents struct values from having quotes around them
+	// this enables the ability to reference variable values
+	Variable = "variable"
 
 	// OmitTag will omit this field from encoding. This is the similar
 	// behavior to `json:"-"`.
